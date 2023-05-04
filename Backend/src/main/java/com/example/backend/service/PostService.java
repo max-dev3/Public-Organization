@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Post;
 import com.example.backend.repository.PostRepository;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,8 @@ public class PostService {
     }
 
     public Post createPost(Post post) {
+        post.setCreatedAt(new Date());
+        post.setUpdatedAt(new Date());
         return postRepository.save(post);
     }
 

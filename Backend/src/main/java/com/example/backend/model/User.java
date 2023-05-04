@@ -4,6 +4,7 @@ package com.example.backend.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -49,4 +50,5 @@ public class User {
     public User(Long id) {
         this.id = id;
     }
+
 }

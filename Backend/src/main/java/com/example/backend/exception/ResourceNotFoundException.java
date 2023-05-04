@@ -1,4 +1,4 @@
-package com.example.backend.service;
+package com.example.backend.exception;
 
 public class ResourceNotFoundException extends Throwable {
     public ResourceNotFoundException(String s) {
