@@ -1,41 +1,70 @@
 package com.example.backend.service;
 
+import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Like;
 import com.example.backend.model.Post;
 import com.example.backend.model.User;
 import com.example.backend.repository.LikeRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class LikeService {
 
     private final LikeRepository likeRepository;
+    private final PostService postService;
+    private final UserService userService;
 
-    public LikeService(LikeRepository likeRepository) {
+    public LikeService(LikeRepository likeRepository, PostService postService, UserService userService) {
         this.likeRepository = likeRepository;
+        this.postService = postService;
+        this.userService = userService;
     }
 
-    public Optional<Like> getLikeByUserIdAndPostId(Long userId, Long postId) {
-        return likeRepository.findByUserIdAndPostId(userId, postId);
+    // Create a like
+    public Like createLike(Long userId, Long postId) throws ResourceNotFoundException {
+        Optional<User> user = userService.getUserById(userId);
+        Optional<Post> post = postService.getPostById(postId);
+
+        if (!user.isPresent()) {
+            throw new ResourceNotFoundException("User with id " + userId + " not found.");
+        }
+        if (!post.isPresent()) {
+            throw new ResourceNotFoundException("Post with id " + postId + " not found.");
+        }
+
+        Like newLike = new Like();
+        newLike.setUser(user.get());
+        newLike.setPost(post.get());
+
+        return likeRepository.save(newLike);
     }
 
-    public void toggleLike(Long userId, Long postId) {
-        Optional<Like> existingLike = likeRepository.findByUserIdAndPostId(userId, postId);
+    // Get all likes
+    public List<Like> getAllLikes() {
+        return likeRepository.findAll();
+    }
+
+    // Get a like by ID
+    public Optional<Like> getLikeById(Long likeId) {
+        return likeRepository.findById(likeId);
+    }
+
+    // Delete a like
+    public void deleteLike(Long likeId) throws ResourceNotFoundException {
+        Optional<Like> existingLike = likeRepository.findById(likeId);
 
         if (!existingLike.isPresent()) {
-            Like newLike = new Like();
-            newLike.setUser(new User(userId)); // assuming User has a constructor that takes an id
-            newLike.setPost(new Post(postId)); // assuming Post has a constructor that takes an id
-            newLike.setLiked(true);
-            likeRepository.save(newLike);
-        } else {
-            Like likeToUpdate = existingLike.get();
-            likeToUpdate.setLiked(!likeToUpdate.isLiked());
-            likeRepository.save(likeToUpdate);
+            throw new ResourceNotFoundException("Like with id " + likeId + " not found.");
         }
+
+        likeRepository.deleteById(likeId);
     }
 
-
+    // Count likes by post ID
+    public int countLikesByPostId(Long postId) {
+        return likeRepository.countByPostId(postId);
+    }
 }

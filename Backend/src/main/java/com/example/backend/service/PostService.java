@@ -1,8 +1,11 @@
 package com.example.backend.service;
 
+import com.example.backend.exception.InvalidInputException;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Post;
+import com.example.backend.model.User;
 import com.example.backend.repository.PostRepository;
+import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,9 +16,11 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Post> getAllPosts() {
@@ -27,6 +32,13 @@ public class PostService {
     }
 
     public Post createPost(Post post) {
+        Optional<User> userOptional = userRepository.findById(post.getUser().getId());
+
+        if (!userOptional.isPresent()) {
+            throw new InvalidInputException("User with id " + post.getUser().getId() + " not found.");
+        }
+
+        post.setUser(userOptional.get());
         post.setCreatedAt(new Date());
         post.setUpdatedAt(new Date());
         return postRepository.save(post);
@@ -47,9 +59,9 @@ public class PostService {
 
         postToUpdate.setTitle(updatedPost.getTitle());
         postToUpdate.setContent(updatedPost.getContent());
+        postToUpdate.setImageUrl(updatedPost.getImageUrl());
         postToUpdate.setUpdatedAt(new Date());
 
         return postRepository.save(postToUpdate);
     }
-
 }

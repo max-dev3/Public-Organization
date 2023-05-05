@@ -25,8 +25,5 @@ public class Like {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    @Column(nullable = false)
-    private boolean liked;
-
 
 }

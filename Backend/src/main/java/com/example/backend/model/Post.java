@@ -25,6 +25,9 @@ public class Post {
     @Column(nullable = false, length = 10000)
     private String content;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
