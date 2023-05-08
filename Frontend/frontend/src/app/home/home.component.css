@@ -1,0 +1,62 @@
+header {
+  background-color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.offer {
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+.offer h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.offer p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.offer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.offer li {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.partners {
+  max-width: 800px;
+}
+
+.partners h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.partners ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.partners li {
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
+
+.partners img {
+  max-height: 50px;
+  margin-right: 1rem;
+}
