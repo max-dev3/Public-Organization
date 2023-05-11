@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.exception.InvalidInputException;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Post;
+import com.example.backend.model.Status;
 import com.example.backend.model.User;
 import com.example.backend.repository.PostRepository;
 import com.example.backend.repository.UserRepository;
@@ -63,5 +64,19 @@ public class PostService {
         postToUpdate.setUpdatedAt(new Date());
 
         return postRepository.save(postToUpdate);
+    }
+
+    public Post approvePost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new InvalidInputException("Post not found with id: " + postId));
+        post.setStatus(Status.APPROVED);
+        return postRepository.save(post);
+    }
+
+    public Post rejectPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new InvalidInputException("Post not found with id: " + postId));
+        post.setStatus(Status.REJECTED);
+        return postRepository.save(post);
     }
 }

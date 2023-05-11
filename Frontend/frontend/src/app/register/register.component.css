@@ -1,11 +1,9 @@
-
 .container {
   background-color: #f7fafc;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   max-width: 400px;
-  height: 350px;
   padding: 20px;
   margin: 60px auto;
 }
@@ -19,11 +17,22 @@
   margin-bottom: 20px;
 }
 
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
 .form-group input {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.form-group .invalid-feedback {
+  color: red;
+  margin-top: 5px;
 }
 
 button {
@@ -42,26 +51,28 @@ button:hover {
   background-color: #0056b3;
 }
 
-.text-danger {
+.alert {
+  text-align: center;
+  margin-top: 15px;
   color: red;
-  font-size: 1em;
-  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.register-link a{
+  text-decoration: none;
+  font-weight: bold;
+  color: inherit;
 }
 
 .required-star {
   color: red;
 }
 
-.register-link {
-
-  text-align: center;
-  margin-top: 15px;
-}
-.register-link a{
-  text-decoration: none;
-  font-weight: bold;
-  color: inherit;
-}
 @media (min-width: 768px) {
   body {
     display: flex;

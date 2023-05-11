@@ -1,7 +1,9 @@
 package com.example.backend.service;
 
 import com.example.backend.exception.InvalidInputException;
+import com.example.backend.exception.InvalidPasswordException;
 import com.example.backend.exception.ResourceNotFoundException;
+import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,4 +150,20 @@ public class UserService {
             throw new InvalidInputException("Invalid phone number format: " + user.getPhoneNumber());
         }
     }
+    public User authenticateUser(String username, String password) {
+        Optional<User> optionalUser = userRepository.findByUsername(username);
+
+        if (!optionalUser.isPresent()) {
+            throw new UserNotFoundException("User with username " + username + " not found");
+        }
+
+        if (!passwordEncoder.matches(password, optionalUser.get().getPassword())) {
+            throw new InvalidPasswordException("Invalid password for username " + username);
+        }
+
+        return optionalUser.get();
+    }
+
+
+
 }

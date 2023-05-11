@@ -16,15 +16,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
+  /*  @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin") // Встановіть свій логін тут
                 .password(passwordEncoder().encode("your_password")) // Встановіть свій пароль тут
                 .roles("ADMIN");
-    }
+    }*/
 
-    @Override
+  /*  @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
@@ -32,5 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
-    }
+    }*/
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+      http
+              .csrf().disable()
+              .authorizeRequests()
+              .anyRequest().permitAll()
+              .and()
+              .httpBasic().disable();
+  }
+
 }

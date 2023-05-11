@@ -13,6 +13,8 @@
     <li><a href="/projects">Проекти</a></li>
     <li><a href="/about">Про нас</a></li>
     <li><a href="/contacts">Контакти</a></li>
-    <li><button class="login-btn">Вхід</button></li>
+    <li *ngIf="!isLoggedIn"><button class="login-btn" routerLink="/login">Вхід</button></li>
+    <li *ngIf="isLoggedIn"><button class="login-btn" routerLink="/login" (click)="logout()">Вихід</button></li>
+
   </ul>
 </section>

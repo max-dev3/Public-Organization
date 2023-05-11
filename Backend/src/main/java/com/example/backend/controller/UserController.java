@@ -1,7 +1,11 @@
 package com.example.backend.controller;
 
+import com.example.backend.exception.InvalidPasswordException;
 import com.example.backend.exception.ResourceNotFoundException;
+import com.example.backend.exception.UserNotFoundException;
 import com.example.backend.model.User;
+import com.example.backend.request.UserLoginRequest;
+import com.example.backend.response.ErrorResponse;
 import com.example.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,4 +62,18 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // Login user
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody UserLoginRequest userLoginRequest) {
+        try {
+            User user = userService.authenticateUser(userLoginRequest.getUsername(), userLoginRequest.getPassword());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (UserNotFoundException | InvalidPasswordException ex) {
+            ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+            return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+
 }

@@ -5,6 +5,7 @@ import com.example.backend.model.Post;
 import com.example.backend.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,5 +48,17 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deletePost(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{postId}/approve")
+    public ResponseEntity<Post> approvePost(@PathVariable Long postId) {
+        Post post = postService.approvePost(postId);
+        return ResponseEntity.ok(post);
+    }
+
+    @PutMapping("/{postId}/reject")
+    public ResponseEntity<Post> rejectPost(@PathVariable Long postId) {
+        Post post = postService.rejectPost(postId);
+        return ResponseEntity.ok(post);
     }
 }

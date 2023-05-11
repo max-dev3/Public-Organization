@@ -1,4 +1,5 @@
 import {Component, ElementRef, HostListener} from '@angular/core';
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,14 @@ import {Component, ElementRef, HostListener} from '@angular/core';
 })
 export class HeaderComponent {
   menuOpen = false;
+  isLoggedIn = false;
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef,private authService: AuthService) {}
+  ngOnInit(): void {
+    this.authService.isLoggedIn().subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn;
+    });
+  }
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -20,4 +27,11 @@ export class HeaderComponent {
       this.menuOpen = false;
     }
   }
+  // navigation.component.ts
+  logout(): void {
+    this.authService.logout();
+  }
+
+
+
 }
