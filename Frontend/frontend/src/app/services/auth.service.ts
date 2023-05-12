@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,25 @@ export class AuthService {
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials)
+      .pipe(
+
+        tap(response => {
+
+          localStorage.setItem('user', JSON.stringify(response));
+
+          this.setLoggedInStatus(true);
+        })
+      );
+  }
+
+
+  getUser(): any {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+  deleteAccount(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
   isLoggedIn() {

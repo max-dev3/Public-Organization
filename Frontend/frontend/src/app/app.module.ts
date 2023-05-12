@@ -13,6 +13,11 @@ import { FooterComponent } from './footer/footer.component';
 import {HttpClientModule} from "@angular/common/http";
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ProfileComponent } from './profile/profile.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -24,15 +29,20 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     ContactsComponent,
     LoginComponent,
     FooterComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    DeleteDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatTabsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

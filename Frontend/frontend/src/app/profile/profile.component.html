@@ -1,0 +1,41 @@
+<div class="profile-container">
+
+
+  <div class="profile-info">
+    <h1>Профіль користувача</h1>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Ім'я:</strong> {{ user.firstName }}</p>
+    <p><strong>Прізвище:</strong> {{ user.lastName }}</p>
+    <p><strong>Номер телефону:</strong> {{ user.phoneNumber }}</p>
+
+  <button class="delete-btn" (click)="deleteAccount()">Видалити профіль</button>
+  <app-delete-dialog *ngIf="isDialogVisible" (confirm)="deleteAccount()" (cancel)="hideDialog()"></app-delete-dialog>
+  </div>
+  <div class="projects-wrapper">
+    <div class="projects-container">
+      <div class="projects-header">
+        <button class="projects-button" (click)="showOwnProjects()">Власні проекти</button>
+        <button class="projects-button" (click)="showLikedProjects()">Вподобані проекти</button>
+      </div>
+    </div>
+    <div *ngIf="showingOwnProjects" class="projects-content">
+      <!-- Display user's own projects here -->
+      <div *ngFor="let post of userPosts" class="post-card">
+        <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
+        <h3 class="post-title">{{post.title}}</h3>
+        <p class="post-content">{{post.content | slice:0:100}}...</p>
+        <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
+        <div class="likes">
+          <span class="likes-count">{{post.likes.length}}</span>
+        </div>
+      </div>
+      <button (click)="createProject()">Створити власний проект</button>
+      <!-- ... -->
+    </div>
+    <div *ngIf="!showingOwnProjects" class="projects-content">
+      <!-- Display user's liked projects here -->
+      <!-- ... -->
+    </div>
+  </div>
+</div>

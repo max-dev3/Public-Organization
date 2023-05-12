@@ -34,7 +34,11 @@ public class PostController {
                 .orElseThrow(() -> new ResourceNotFoundException("Post with id " + id + " not found."));
         return ResponseEntity.ok(post);
     }
-
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Post>> getPostsByUserId(@PathVariable Long userId) {
+        List<Post> posts = postService.getPostsByUserId(userId);
+        return ResponseEntity.ok(posts);
+    }
     @PostMapping
     public ResponseEntity<Post> createPost(
             @RequestParam("post") String postJson,

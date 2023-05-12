@@ -76,6 +76,9 @@ public class PostService {
 
         return postRepository.save(postToUpdate);
     }
+    public List<Post> getPostsByUserId(Long userId) {
+        return postRepository.findByUserId(userId);
+    }
 
     public Post approvePost(Long postId) {
         Post post = postRepository.findById(postId)
