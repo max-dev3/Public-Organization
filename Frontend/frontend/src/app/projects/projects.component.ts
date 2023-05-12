@@ -1,28 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {Post, PostService} from "../services/post.service";
 
 @Component({
-  selector: 'app-projects',
+  selector: 'app-project',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit {
   posts: Post[] = [];
-
-  constructor(private postService: PostService) {}
+  imageStr: string  = ''
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.fetchPosts();
+    this.postService.getAllPosts().subscribe(posts => {
+      this.posts = posts;
+    });
+    this.imageStr = 'http://localhost:8080'
   }
 
-  fetchPosts(): void {
-    this.postService.getAllPosts().subscribe(
-      (data: Post[]) => {
-        this.posts = data;
-      },
-      (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    );
+  likePost(postId: number): void {
+  /*  this.postService.addLike(postId).subscribe(() => {
+      this.ngOnInit(); // Refresh posts to update likes count*/
+    // });
   }
 }

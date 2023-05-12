@@ -2,6 +2,7 @@ package com.example.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,13 +25,12 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false, length = 10000)
+    @Column(nullable = false)
     private String content;
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -46,6 +46,7 @@ public class Post {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
+    @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Like> likes;
     public Post(Long id) {

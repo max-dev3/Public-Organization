@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 export interface Post {
   id: number;
   title: string;
@@ -14,6 +15,8 @@ export interface Post {
 
 export interface User {
   id: number;
+  lastName: string;
+  firstName: string;
   // Додайте інші поля моделі User, які вам потрібні
 }
 
@@ -26,7 +29,7 @@ export interface Like {
   providedIn: 'root'
 })
 export class PostService {
-  private apiUrl = '/api/posts';
+  private apiUrl = 'http://localhost:8080/api/posts';
 
   constructor(private http: HttpClient) {}
 
@@ -49,4 +52,20 @@ export class PostService {
   deletePost(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  /*approvePost(postId: number): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/${postId}/approve`);
+  }
+
+  rejectPost(postId: number): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/${postId}/reject`);
+  }
+
+  addLike(postId: number): Observable<Like> {
+    return this.http.post<Like>(`${this.apiUrl}/${postId}/likes`);
+  }
+
+  removeLike(postId: number, likeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${postId}/likes/${likeId}`);
+  }*/
 }

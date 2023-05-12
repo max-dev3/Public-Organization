@@ -3,10 +3,13 @@ package com.example.backend.controller;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Post;
 import com.example.backend.service.PostService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,9 +36,13 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        Post newPost = postService.createPost(post);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newPost);
+    public ResponseEntity<Post> createPost(
+            @RequestParam("post") String postJson,
+            @RequestParam("imageFile") MultipartFile imageFile) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Post post = mapper.readValue(postJson, Post.class);
+        Post createdPost = postService.createPost(post, imageFile);
+        return new ResponseEntity<>(createdPost, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

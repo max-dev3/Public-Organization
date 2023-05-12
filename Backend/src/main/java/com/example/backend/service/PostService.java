@@ -8,7 +8,9 @@ import com.example.backend.model.User;
 import com.example.backend.repository.PostRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +29,14 @@ public class PostService {
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
-
+    public List<Post> getAllApprovedPosts() {
+        return postRepository.findByStatus(Status.APPROVED);
+    }
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
     }
 
-    public Post createPost(Post post) {
+    public Post createPost(Post post, MultipartFile imageFile) {
         Optional<User> userOptional = userRepository.findById(post.getUser().getId());
 
         if (!userOptional.isPresent()) {
@@ -42,8 +46,15 @@ public class PostService {
         post.setUser(userOptional.get());
         post.setCreatedAt(new Date());
         post.setUpdatedAt(new Date());
+        post.setStatus(Status.PENDING_APPROVAL);
+
+        // Upload the image and set the imageUrl of the post to the path of the uploaded image
+        String imageUrl = uploadFile(imageFile);
+        post.setImageUrl(imageUrl);
+
         return postRepository.save(post);
     }
+
 
     public void deletePost(Long id) {
         postRepository.deleteById(id);
@@ -78,5 +89,24 @@ public class PostService {
                 .orElseThrow(() -> new InvalidInputException("Post not found with id: " + postId));
         post.setStatus(Status.REJECTED);
         return postRepository.save(post);
+    }
+
+
+    public String uploadFile(MultipartFile file) {
+        try {
+            // Define the path to the directory where you want to save the image
+            String uploadDir = "D:/Навчання/3_course/PublicOrg/uploads/images/";
+
+            // Create a new file in the specified directory with the original file name
+            File upload = new File(uploadDir + file.getOriginalFilename());
+
+            // Transfer the uploaded file to the new file
+            file.transferTo(upload);
+
+            // Return the path to the uploaded file
+            return "/images/" + file.getOriginalFilename();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to upload file", e);
+        }
     }
 }
