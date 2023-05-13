@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Створити новий пост</h1>
+  <form [formGroup]="createPostForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+    <div class="form-group">
+      <label for="title">Назва</label>
+      <input type="text" class="form-control" id="title" formControlName="title" placeholder="Введіть назву">
+      <div *ngIf="submitted && f['title'].errors" class="invalid-feedback">
+        <div *ngIf="f['title'].errors['required']">Назва обов'язкова</div>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="content">Вміст</label>
+      <textarea class="form-control" id="content" formControlName="content" rows="5"></textarea>
+      <div *ngIf="submitted && f['content'].errors" class="invalid-feedback">
+        <div *ngIf="f['content'].errors['required']">Вміст обов'язковий</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Зображення</label>
+      <input type="file" id="image" (change)="onFileChange($event)">
+    </div>
+
+    <button type="submit" [disabled]="createPostForm.invalid" class="btn btn-primary">Створити пост</button>
+
+  </form>
+
+<!--  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">-->
+<!--    {{errorMessage}}-->
+<!--  </div>-->
+</div>

@@ -2,12 +2,15 @@ package com.example.backend.controller;
 
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.model.Post;
+import com.example.backend.model.User;
+import com.example.backend.service.PostLikeService;
 import com.example.backend.service.PostService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,9 +21,11 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final PostLikeService postLikeService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostLikeService postLikeService) {
         this.postService = postService;
+        this.postLikeService = postLikeService;
     }
 
     @GetMapping
@@ -72,4 +77,16 @@ public class PostController {
         Post post = postService.rejectPost(postId);
         return ResponseEntity.ok(post);
     }
+
+    @GetMapping("/user/{userId}/likes")
+    public ResponseEntity<List<Post>> getLikedPostsByUserId(@PathVariable Long userId) {
+        List<Post> posts = postService.getLikedPostsByUserId(userId);
+        return ResponseEntity.ok(posts);
+    }
+    @PutMapping("/{postId}/toggle-like/{userId}")
+    public ResponseEntity<Post> toggleLike(@PathVariable Long postId, @PathVariable Long userId) throws ResourceNotFoundException {
+        Post post = postLikeService.toggleLike(postId, userId);
+        return ResponseEntity.ok(post);
+    }
+
 }

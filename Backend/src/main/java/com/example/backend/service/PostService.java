@@ -2,9 +2,11 @@ package com.example.backend.service;
 
 import com.example.backend.exception.InvalidInputException;
 import com.example.backend.exception.ResourceNotFoundException;
+import com.example.backend.model.Like;
 import com.example.backend.model.Post;
 import com.example.backend.model.Status;
 import com.example.backend.model.User;
+import com.example.backend.repository.LikeRepository;
 import com.example.backend.repository.PostRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,9 +23,11 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+
     public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+
     }
 
     public List<Post> getAllPosts() {
@@ -34,6 +38,9 @@ public class PostService {
     }
     public Optional<Post> getPostById(Long id) {
         return postRepository.findById(id);
+    }
+    public List<Post> getLikedPostsByUserId(Long userId) {
+        return postRepository.findLikedPostsByUserId(userId);
     }
 
     public Post createPost(Post post, MultipartFile imageFile) {

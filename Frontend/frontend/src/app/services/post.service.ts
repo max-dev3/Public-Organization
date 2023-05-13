@@ -15,14 +15,13 @@ export interface Post {
 
 export interface User {
   id: number;
-  lastName: string;
-  firstName: string;
-  // Додайте інші поля моделі User, які вам потрібні
+  lastName?: string;
+  firstName?: string;
 }
 
 export interface Like {
   id: number;
-  // Додайте інші поля моделі Like, які вам потрібні
+  user: User;
 }
 
 @Injectable({
@@ -43,9 +42,15 @@ export class PostService {
     return this.http.get<Post>(`${this.apiUrl}/${id}`);
   }
 
-  createPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(this.apiUrl, post);
+  createPost(post: Partial<Post>, imageFile: File): Observable<Post> {
+    const formData: FormData = new FormData();
+
+    formData.append('post', JSON.stringify(post));
+    formData.append('imageFile', imageFile, imageFile.name);
+
+    return this.http.post<Post>(this.apiUrl, formData);
   }
+
 
   updatePost(id: number, updatedPost: Post): Observable<Post> {
     return this.http.put<Post>(`${this.apiUrl}/${id}`, updatedPost);
@@ -54,7 +59,12 @@ export class PostService {
   deletePost(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
-
+  getLikedPosts(userId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/user/${userId}/likes`);
+  }
+  toggleLike(postId: number, userId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${postId}/toggle-like/${userId}`, {});
+  }
   /*approvePost(postId: number): Observable<Post> {
     return this.http.put<Post>(`${this.apiUrl}/${postId}/approve`);
   }

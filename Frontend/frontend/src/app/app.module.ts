@@ -18,6 +18,11 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTabsModule} from "@angular/material/tabs";
+import { CreateProjectComponent } from './create-project/create-project.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatBadgeModule} from "@angular/material/badge";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { UkDatePipe } from './uk-date.pipe';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     FooterComponent,
     RegisterComponent,
     ProfileComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    CreateProjectComponent,
+    UkDatePipe
   ],
     imports: [
         BrowserModule,
@@ -41,7 +48,10 @@ import {MatTabsModule} from "@angular/material/tabs";
         ReactiveFormsModule,
         MatDialogModule,
         MatButtonModule,
-        MatTabsModule
+        MatTabsModule,
+        MatIconModule,
+        MatBadgeModule,
+      BrowserAnimationsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

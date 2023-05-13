@@ -53,4 +53,7 @@ public class LikeController {
         int count = likeService.countLikesByPostId(postId);
         return ResponseEntity.ok(count);
     }
+
+
+
 }

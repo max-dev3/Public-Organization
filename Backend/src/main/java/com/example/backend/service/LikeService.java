@@ -51,6 +51,9 @@ public class LikeService {
     public Optional<Like> getLikeById(Long likeId) {
         return likeRepository.findById(likeId);
     }
+    public Optional<Like> getLikeByPostIdAndUserId(Long postId, Long userId) {
+        return likeRepository.findByPostIdAndUserId(postId, userId);
+    }
 
     // Delete a like
     public void deleteLike(Long likeId) throws ResourceNotFoundException {
