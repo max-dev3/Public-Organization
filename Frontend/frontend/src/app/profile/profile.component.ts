@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   userPosts: Post[] = [];
   likedPosts: Post[] = [];
 
+  currentUserId: number = this.authService.getUser()?.id;
 
 
   constructor(private authService: AuthService, private postService: PostService, private router: Router) { }
@@ -36,6 +37,19 @@ export class ProfileComponent implements OnInit {
     this.showingOwnProjects = true;
   }
 
+  isLiked(post: Post): boolean {
+    // Check if the current user has liked this post
+    return post.likes.some(like => like.user.id === this.currentUserId);
+  }
+
+  toggleLike(postId: number, userId: number): void {
+    this.postService.toggleLike(postId, userId).subscribe(() => {
+      const postIndex = this.likedPosts.findIndex(post => post.id === postId);
+      if (postIndex > -1) {
+        this.likedPosts.splice(postIndex, 1);
+      }
+    });
+  }
 
 
   hideDialog() {

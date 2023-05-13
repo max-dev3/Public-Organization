@@ -21,11 +21,6 @@ export class ProjectsComponent implements OnInit {
     this.imageStr = 'http://localhost:8080'
   }
 
-  likePost(postId: number): void {
-  /*  this.postService.addLike(postId).subscribe(() => {
-      this.ngOnInit(); // Refresh posts to update likes count*/
-    // });
-  }
   isLiked(post: Post): boolean {
     // Check if the current user has liked this post
     return post.likes.some(like => like.user.id === this.currentUserId);
@@ -33,7 +28,7 @@ export class ProjectsComponent implements OnInit {
 
   toggleLike(postId: number, userId: number): void {
     this.postService.toggleLike(postId, userId).subscribe(() => {
-      this.ngOnInit(); // Refresh posts to update likes count and status
+      this.ngOnInit();
     });
   }
 

@@ -15,32 +15,49 @@
   <div class="projects-wrapper">
     <div class="projects-container">
       <div class="projects-header">
-        <button class="projects-button" (click)="showOwnProjects()">Власні проекти</button>
-        <button class="projects-button" (click)="showLikedProjects()">Вподобані проекти</button>
+        <button class="projects-button" [ngClass]="{'active': showingOwnProjects}" (click)="showOwnProjects()">Власні проекти</button>
+        <button class="projects-button" [ngClass]="{'active': !showingOwnProjects}" (click)="showLikedProjects()">Вподобані проекти</button>
       </div>
     </div>
+
     <div *ngIf="showingOwnProjects" class="projects-content">
-      <div *ngFor="let post of userPosts" class="post-card">
+        <button routerLink="/create-project" class="create-project-btn">Створити власний проект</button>
+      <div class="posts-grid">
+      <div *ngFor="let post of userPosts" class="post-card" [routerLink]="['/post', post.id]">
         <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
         <h3 class="post-title">{{post.title}}</h3>
-        <p class="post-content">{{post.content | slice:0:100}}...</p>
-        <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
+        <p class="post-content">{{post.content | slice:0:20}}...</p>
+        <div>
+          <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
+          <p class="post-date">{{ post.createdAt | ukDate }}</p>
+        </div>
         <div class="likes">
           <span class="likes-count">{{post.likes.length}}</span>
+
         </div>
       </div>
-      <button routerLink="/create-project">Створити власний проект</button>
+    </div>
     </div>
     <div *ngIf="!showingOwnProjects" class="projects-content">
-      <div *ngFor="let post of likedPosts" class="post-card">
-        <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
-        <h3 class="post-title">{{post.title}}</h3>
-        <p class="post-content">{{post.content | slice:0:100}}...</p>
-        <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
-        <div class="likes">
-          <span class="likes-count">{{post.likes.length}}</span>
+      <div class="posts-grid">
+        <div *ngFor="let post of likedPosts" class="post-card" [routerLink]="['/post', post.id]">
+          <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
+          <h3 class="post-title">{{post.title}}</h3>
+          <p class="post-content">{{post.content | slice:0:20}}...</p>
+          <div>
+            <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
+            <p class="post-date">{{ post.createdAt | ukDate }}</p>
+          </div>
+          <div class="likes">
+            <span class="likes-count">{{post.likes.length}}</span>
+            <div class="favorite-icon" [ngClass]="{ 'is-favorite': isLiked(post) }">
+              <mat-icon (click)="toggleLike(post.id, currentUserId)">
+                {{ isLiked(post) ? 'favorite' : 'favorite_border' }}
+              </mat-icon>
+            </div>
+          </div>
         </div>
-      </div>
+    </div>
     </div>
   </div>
 </div>
