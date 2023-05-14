@@ -1,8 +1,8 @@
 <div class="posts-grid">
-  <div *ngFor="let post of posts" class="post-card" [routerLink]="['/post', post.id]">
+  <div *ngFor="let post of posts" class="post-card" [routerLink]="['/view-project', post.id]">
     <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
     <h3 class="post-title">{{post.title}}</h3>
-    <p class="post-content">{{post.content | slice:0:100}}...</p>
+    <p class="post-content" [innerHTML]="(post.content | slice:0:50) + '...'"></p>
     <div>
       <p class="post-author">{{post.user.firstName}} {{post.user.lastName}}</p>
       <p class="post-date">{{ post.createdAt | ukDate }}</p>
@@ -10,7 +10,7 @@
     <div class="likes">
       <span class="likes-count">{{post.likes.length}}</span>
       <div class="favorite-icon" [ngClass]="{ 'is-favorite': isLiked(post) }">
-        <mat-icon (click)="toggleLike(post.id, currentUserId)">
+        <mat-icon (click)="toggleLike(post.id, currentUserId); $event.stopPropagation()" >
           {{ isLiked(post) ? 'favorite' : 'favorite_border' }}
         </mat-icon>
       </div>

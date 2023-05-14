@@ -71,13 +71,5 @@ export class PostService {
 
   rejectPost(postId: number): Observable<Post> {
     return this.http.put<Post>(`${this.apiUrl}/${postId}/reject`);
-  }
-
-  addLike(postId: number): Observable<Like> {
-    return this.http.post<Like>(`${this.apiUrl}/${postId}/likes`);
-  }
-
-  removeLike(postId: number, likeId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${postId}/likes/${likeId}`);
   }*/
 }

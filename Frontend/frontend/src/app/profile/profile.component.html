@@ -23,7 +23,7 @@
     <div *ngIf="showingOwnProjects" class="projects-content">
         <button routerLink="/create-project" class="create-project-btn">Створити власний проект</button>
       <div class="posts-grid">
-      <div *ngFor="let post of userPosts" class="post-card" [routerLink]="['/post', post.id]">
+      <div *ngFor="let post of userPosts" class="post-card" [routerLink]="['/view-project', post.id]">
         <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
         <h3 class="post-title">{{post.title}}</h3>
         <p class="post-content">{{post.content | slice:0:20}}...</p>
@@ -32,15 +32,16 @@
           <p class="post-date">{{ post.createdAt | ukDate }}</p>
         </div>
         <div class="likes">
-          <span class="likes-count">{{post.likes.length}}</span>
-
+        <span class="delete-icon" (click)="deletePost(post.id); $event.stopPropagation()">
+          <mat-icon>delete</mat-icon>
+        </span>
         </div>
       </div>
     </div>
     </div>
     <div *ngIf="!showingOwnProjects" class="projects-content">
       <div class="posts-grid">
-        <div *ngFor="let post of likedPosts" class="post-card" [routerLink]="['/post', post.id]">
+        <div *ngFor="let post of likedPosts" class="post-card" [routerLink]="['/view-project', post.id]">
           <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
           <h3 class="post-title">{{post.title}}</h3>
           <p class="post-content">{{post.content | slice:0:20}}...</p>
@@ -51,7 +52,7 @@
           <div class="likes">
             <span class="likes-count">{{post.likes.length}}</span>
             <div class="favorite-icon" [ngClass]="{ 'is-favorite': isLiked(post) }">
-              <mat-icon (click)="toggleLike(post.id, currentUserId)">
+              <mat-icon (click)="toggleLike(post.id, currentUserId); $event.stopPropagation()">
                 {{ isLiked(post) ? 'favorite' : 'favorite_border' }}
               </mat-icon>
             </div>

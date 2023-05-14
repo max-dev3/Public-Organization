@@ -218,3 +218,12 @@
     padding: 10px;
   }
 }
+.delete-icon {
+  cursor: pointer;
+  font-size: 2rem;
+  color: red;
+}
+
+.delete-icon:hover {
+  opacity: 0.5;
+}

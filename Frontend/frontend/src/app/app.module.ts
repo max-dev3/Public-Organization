@@ -23,6 +23,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatBadgeModule} from "@angular/material/badge";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UkDatePipe } from './uk-date.pipe';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { ViewPostComponent } from './view-post/view-post.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { UkDatePipe } from './uk-date.pipe';
     ProfileComponent,
     DeleteDialogComponent,
     CreateProjectComponent,
-    UkDatePipe
+    UkDatePipe,
+    ViewPostComponent
   ],
     imports: [
         BrowserModule,
@@ -51,7 +54,8 @@ import { UkDatePipe } from './uk-date.pipe';
         MatTabsModule,
         MatIconModule,
         MatBadgeModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      CKEditorModule
     ],
   providers: [],
   bootstrap: [AppComponent]

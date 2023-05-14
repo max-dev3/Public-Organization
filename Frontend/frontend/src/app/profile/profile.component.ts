@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import {Router} from "@angular/router";
-import {Post, PostService} from "../services/post.service";
+import { Router } from "@angular/router";
+import { Post, PostService } from "../services/post.service";
 
 
 @Component({
@@ -22,9 +22,21 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getUser();
+    this.getUserPosts();
+    this.getLikedPosts();
+  }
+
+  getUserPosts() {
     this.postService.getUserPosts(this.user.id).subscribe(
       posts => this.userPosts = posts,
       error => console.error('Failed to fetch user posts', error)
+    );
+  }
+
+  getLikedPosts() {
+    this.postService.getLikedPosts(this.user.id).subscribe(
+      posts => this.likedPosts = posts,
+      error => console.error('Failed to fetch liked posts', error)
     );
   }
 
@@ -51,17 +63,24 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-
   hideDialog() {
     this.isDialogVisible = false;
   }
+
   showLikedProjects() {
     this.showingOwnProjects = false;
-    this.postService.getLikedPosts(this.user.id).subscribe(
-      posts => this.likedPosts = posts,
-      error => console.error('Failed to fetch liked posts', error)
-    );
   }
+
+  deletePost(postId: number) {
+    this.postService.deletePost(postId).subscribe(() => {
+      // After successful delete, remove the post from userPosts array
+      this.userPosts = this.userPosts.filter(post => post.id !== postId);
+    }, error => {
+      console.error('Error deleting post', error);
+      // Handle errors here
+    });
+  }
+
   deleteAccount() {
     this.authService.deleteAccount(this.user.id).subscribe(
       response => {
@@ -75,4 +94,3 @@ export class ProfileComponent implements OnInit {
     );
   }
 }
-
