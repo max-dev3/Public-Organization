@@ -7,7 +7,7 @@
   max-width: 400px;
   height: 350px;
   padding: 20px;
-  margin: 60px auto;
+  margin: 120px auto;
 }
 
 .title {
@@ -70,5 +70,6 @@ button:hover {
     align-items: center;
     height: 100vh;
     padding: 20px 0;
+    margin-top: 100px;
   }
 }

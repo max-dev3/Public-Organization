@@ -4,8 +4,12 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-bottom: -3rem;
-}
 
+}
+h1{
+  margin-top: 100px;
+
+}
 .about-image {
   margin-left: -4rem;
 }
@@ -38,6 +42,10 @@
 }
 
 @media (max-width: 800px) {
+  h1{
+    margin-top: 100px;
+
+  }
   .about-image {
     margin-top: 20px;
     margin-left: 0;

@@ -1,7 +1,7 @@
 .profile-container {
   width: 80%;
   margin: auto;
-  padding: 20px;
+  padding: 80px;
   display: flex;
   justify-content: space-between;
   align-items: start;
@@ -10,6 +10,7 @@
 }
 
 .profile-info {
+
   margin-top: 20px;
   flex: 1;
 }
@@ -189,6 +190,8 @@
   .profile-container {
     flex-direction: column;
     gap: 20px;
+    padding: 0;
+    padding-top: 80px;
   }
 
   .profile-info {

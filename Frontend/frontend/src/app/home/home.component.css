@@ -29,6 +29,7 @@ header {
   width: 50%; /* Ви можете змінити розмір зображення, змінивши значення ширини */
   max-width: 450px; /* Максимальна ширина зображення */
   height: auto;
+  margin-top: 50px;
   object-fit: cover;
 }
 .directions {
@@ -199,6 +200,7 @@ header {
     margin: 1rem;
   }
   .offer h1 {
+    margin-top: 50px;
     font-size: 1.5rem;
   }
   .offer h1 span {

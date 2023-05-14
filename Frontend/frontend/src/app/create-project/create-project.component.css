@@ -4,8 +4,9 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   max-width: 400px;
-  padding: 20px 200px;
-  margin: 60px auto;
+  padding: 20px 50px;
+  margin: 30px auto;
+  margin-top: 100px;
 }
 
 .h1{
@@ -97,6 +98,8 @@ form{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 120px;
+    padding: 20px 200px;
 
 
   }

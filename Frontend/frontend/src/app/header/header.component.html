@@ -9,13 +9,13 @@
   </label>
 
   <ul class="menu">
-    <li><a href="/">Головна</a></li>
-    <li><a href="/projects">Проекти</a></li>
-    <li><a href="/about">Про нас</a></li>
-    <li><a href="/contacts">Контакти</a></li>
-    <li *ngIf="isLoggedIn"><a href="/profile">Профіль</a></li>
-    <li *ngIf="!isLoggedIn"><button class="login-btn" routerLink="/login">Вхід</button></li>
-    <li *ngIf="isLoggedIn"><button class="login-btn" routerLink="/login" (click)="logout()">Вихід</button></li>
-
+    <li><a [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-link" routerLink="/">Головна</a></li>
+    <li><a routerLinkActive="active-link" routerLink="/projects">Проекти</a></li>
+    <li><a routerLinkActive="active-link" routerLink="/about">Про нас</a></li>
+    <li><a routerLinkActive="active-link" routerLink="/contacts">Контакти</a></li>
+    <li *ngIf="isLoggedIn"><a routerLinkActive="active-link" routerLink="/profile">Профіль</a></li>
+    <li *ngIf="!isLoggedIn"><button class="login-btn active-link" routerLink="/login">Вхід</button></li>
+    <li *ngIf="isLoggedIn"><button class="login-btn active-link" routerLink="/login" (click)="logout()">Вихід</button></li>
   </ul>
+
 </section>
