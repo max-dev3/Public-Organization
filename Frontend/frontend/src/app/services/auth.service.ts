@@ -32,7 +32,9 @@ export class AuthService {
       );
   }
 
-
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
   getUser(): any {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
@@ -56,6 +58,11 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('loggedIn');
+    localStorage.removeItem('user');
     this.loggedIn.next(false);
+  }
+
+  changeUserRole(userId: number, role: string): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${userId}/role`, { role: role });
   }
 }

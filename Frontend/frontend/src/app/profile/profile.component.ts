@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 
   currentUserId: number = this.authService.getUser()?.id;
 
+  currentUserRole: string = this.authService.getUser()?.role;
 
   constructor(private authService: AuthService, private postService: PostService, private router: Router) { }
 
@@ -92,5 +93,8 @@ export class ProfileComponent implements OnInit {
         console.log('Account deletion failed', error);
       }
     );
+  }
+  canSeeStatus(): boolean {
+    return this.currentUserRole === 'ADMIN' || this.currentUserRole === 'MODERATOR'|| this.currentUserRole === 'USER';
   }
 }

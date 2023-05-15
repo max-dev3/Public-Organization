@@ -45,7 +45,9 @@ public class User {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30)
+    private Role role;
 
     public User(Long id) {
         this.id = id;

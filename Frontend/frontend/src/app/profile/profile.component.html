@@ -23,7 +23,14 @@
     <div *ngIf="showingOwnProjects" class="projects-content">
         <button routerLink="/create-project" class="create-project-btn">Створити власний проект</button>
       <div class="posts-grid">
-      <div *ngFor="let post of userPosts" class="post-card" [routerLink]="['/view-project', post.id]">
+        <div *ngFor="let post of userPosts" class="post-card" [routerLink]="['/view-project', post.id]">
+          <div *ngIf="canSeeStatus() && post.status" class="post-status" [ngClass]="{
+            'pending': post.status === 'PENDING_APPROVAL',
+            'rejected': post.status === 'REJECTED',
+            'approved': post.status === 'APPROVED'
+          }">
+          {{ post.status | statusTranslate }}
+        </div>
         <img [src]="'http://localhost:8080' + post.imageUrl" alt="Post image" class="post-image"/>
         <h3 class="post-title">{{post.title}}</h3>
         <p class="post-content" [innerHTML]="(post.content | slice:0:50) + '...'"></p>

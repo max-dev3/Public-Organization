@@ -88,5 +88,10 @@ public class PostController {
         Post post = postLikeService.toggleLike(postId, userId);
         return ResponseEntity.ok(post);
     }
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<Post>> getPostsByStatus(@PathVariable String status) {
+        List<Post> posts = postService.getPostsByStatus(status);
+        return ResponseEntity.ok(posts);
+    }
 
 }

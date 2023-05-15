@@ -25,6 +25,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { UkDatePipe } from './uk-date.pipe';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import { ViewPostComponent } from './view-post/view-post.component';
+import { StatusTranslatePipe } from './status-translate.pipe';
+import { UserListComponent } from './user-list/user-list.component';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -41,7 +44,9 @@ import { ViewPostComponent } from './view-post/view-post.component';
     DeleteDialogComponent,
     CreateProjectComponent,
     UkDatePipe,
-    ViewPostComponent
+    ViewPostComponent,
+    StatusTranslatePipe,
+    UserListComponent
   ],
     imports: [
         BrowserModule,
@@ -54,8 +59,9 @@ import { ViewPostComponent } from './view-post/view-post.component';
         MatTabsModule,
         MatIconModule,
         MatBadgeModule,
-      BrowserAnimationsModule,
-      CKEditorModule
+        BrowserAnimationsModule,
+        CKEditorModule,
+        MatTableModule
     ],
   providers: [],
   bootstrap: [AppComponent]

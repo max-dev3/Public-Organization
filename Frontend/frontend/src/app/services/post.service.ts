@@ -11,6 +11,7 @@ export interface Post {
   createdAt: Date;
   updatedAt: Date;
   likes: Like[];
+  status?: string
 }
 
 export interface User {
@@ -65,11 +66,14 @@ export class PostService {
   toggleLike(postId: number, userId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/${postId}/toggle-like/${userId}`, {});
   }
-  /*approvePost(postId: number): Observable<Post> {
-    return this.http.put<Post>(`${this.apiUrl}/${postId}/approve`);
+  approvePost(postId: number): Observable<Post> {
+    return this.http.put<Post>(`${this.apiUrl}/${postId}/approve`,{});
+  }
+  getPostsByStatus(status: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${this.apiUrl}/status/${status}`);
   }
 
   rejectPost(postId: number): Observable<Post> {
-    return this.http.put<Post>(`${this.apiUrl}/${postId}/reject`);
-  }*/
+    return this.http.put<Post>(`${this.apiUrl}/${postId}/reject`, {});
+  }
 }

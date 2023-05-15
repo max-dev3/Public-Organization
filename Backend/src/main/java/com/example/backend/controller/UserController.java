@@ -1,8 +1,10 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.RoleDto;
 import com.example.backend.exception.InvalidPasswordException;
 import com.example.backend.exception.ResourceNotFoundException;
 import com.example.backend.exception.UserNotFoundException;
+import com.example.backend.model.Role;
 import com.example.backend.model.User;
 import com.example.backend.request.UserLoginRequest;
 import com.example.backend.response.ErrorResponse;
@@ -26,14 +28,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    // Get all users
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    // Get user by ID
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) throws ResourceNotFoundException {
         User user = userService.getUserById(id)
@@ -41,14 +41,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    // Create user
     @PostMapping
     public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
         User newUser = userService.createUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    // Update user
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User updatedUser)
             throws ResourceNotFoundException {
@@ -56,14 +54,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    // Delete user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws ResourceNotFoundException {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Login user
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@Valid @RequestBody UserLoginRequest userLoginRequest) {
         try {
@@ -74,6 +70,17 @@ public class UserController {
             return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
         }
     }
-
+    @PutMapping("/{id}/role")
+    public ResponseEntity<User> changeUserRole(@PathVariable Long id, @Valid @RequestBody RoleDto roleDto)
+            throws Exception, ResourceNotFoundException {
+        Role userRole;
+        try {
+            userRole = Role.valueOf(roleDto.getRole());
+        } catch (IllegalArgumentException e) {
+            throw new Exception("Invalid role: " + roleDto.getRole());
+        }
+        User user = userService.changeUserRole(id, userRole);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 
 }

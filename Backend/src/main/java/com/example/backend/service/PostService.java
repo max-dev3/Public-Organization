@@ -101,6 +101,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public List<Post> getPostsByStatus(String status) {
+        Status postStatus;
+
+        try {
+            postStatus = Status.valueOf(status.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidInputException("Invalid status: " + status);
+        }
+
+        return postRepository.findByStatus(postStatus);
+    }
 
     public String uploadFile(MultipartFile file) {
         try {

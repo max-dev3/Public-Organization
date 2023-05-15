@@ -1,9 +1,7 @@
 package com.example.backend.service;
 
-import com.example.backend.exception.InvalidInputException;
-import com.example.backend.exception.InvalidPasswordException;
-import com.example.backend.exception.ResourceNotFoundException;
-import com.example.backend.exception.UserNotFoundException;
+import com.example.backend.exception.*;
+import com.example.backend.model.Role;
 import com.example.backend.model.User;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +42,7 @@ public class UserService {
         user.setCreatedAt(new Date());
         user.setUpdatedAt(new Date());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.USER); // set default role to USER
         return userRepository.save(user);
     }
 
@@ -96,9 +95,13 @@ public class UserService {
         userToUpdate.setPhoneNumber(updatedUser.getPhoneNumber());
         userToUpdate.setUpdatedAt(new Date());
 
+        // Add this if you want to allow role update via this method
+        if(updatedUser.getRole() != null) {
+            userToUpdate.setRole(updatedUser.getRole());
+        }
+
         return userRepository.save(userToUpdate);
     }
-
     public Optional<User> getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -106,11 +109,13 @@ public class UserService {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
     public static boolean isValidEmail(String email) {
         String emailRegex = "[A-Za-z0-9+_.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,}";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
     }
+
     public static boolean isValidPhoneNumber(String phoneNumber) {
         // Перевіряємо, чи введений номер телефону має відповідний формат
         Pattern pattern = Pattern.compile("\\+38[0-9]{10}$");
@@ -150,6 +155,7 @@ public class UserService {
             throw new InvalidInputException("Invalid phone number format: " + user.getPhoneNumber());
         }
     }
+
     public User authenticateUser(String username, String password) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
 
@@ -164,6 +170,14 @@ public class UserService {
         return optionalUser.get();
     }
 
+    public User changeUserRole(Long userId, Role role) throws Exception, ResourceNotFoundException {
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-
+        if (role == Role.ADMIN || role == Role.MODERATOR || role == Role.USER ) {
+            user.setRole(role);
+            return userRepository.save(user);
+        } else {
+            throw new InvalidInputException("Invalid role");
+        }
+    }
 }

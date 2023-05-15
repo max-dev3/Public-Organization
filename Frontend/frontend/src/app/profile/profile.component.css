@@ -121,6 +121,7 @@
 }
 
 .post-card {
+  position: relative;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
@@ -185,6 +186,35 @@
 }
 .favorite-icon.is-favorite {
   color: red;
+}
+
+.post-status {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px;
+  z-index: 1;
+}
+
+.post-status.pending {
+  color: #ffb721;
+  border: 1px solid #ffdc2c;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.post-status.rejected {
+  color: red;
+  border: 1px solid red;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.post-status.approved {
+  color: green;
+  border: 1px solid green;
+  background-color: white;
+  border-radius: 10px;
 }
 @media (max-width: 768px) {
   .profile-container {
