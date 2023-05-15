@@ -24,10 +24,19 @@ th, td {
   padding: 8px;
   border-bottom: 1px solid #ddd;
 }
-
+.action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.action-button:hover {
+  background-color: #0056b3;
+}
 .action-button {
+  width: 100%; /* Займає 100% ширини контейнера */
   padding: 5px 10px;
-  margin-right: 10px;
+  margin-right: 0;
   border: none;
   color: #fff;
   background-color: #007BFF;

@@ -13,6 +13,7 @@
     <li><a routerLinkActive="active-link" routerLink="/projects">Проекти</a></li>
     <li><a routerLinkActive="active-link" routerLink="/about">Про нас</a></li>
     <li><a routerLinkActive="active-link" routerLink="/contacts">Контакти</a></li>
+    <li *ngIf="isLoggedIn && isAdmin()"><a routerLinkActive="active-link" routerLink="/users-list">Користувачі</a></li>
     <li *ngIf="isLoggedIn"><a routerLinkActive="active-link" routerLink="/profile">Профіль</a></li>
     <li *ngIf="!isLoggedIn"><button class="login-btn active-link" routerLink="/login">Вхід</button></li>
     <li *ngIf="isLoggedIn"><button class="login-btn active-link" routerLink="/login" (click)="logout()">Вихід</button></li>

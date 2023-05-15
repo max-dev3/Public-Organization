@@ -1,3 +1,9 @@
+<div class="search-sort-container">
+  <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Пошук">
+  <button mat-icon-button (click)="toggleSortOrder()" aria-label="Змінити порядок сортування">
+    <mat-icon>{{ sortAscending ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+  </button>
+</div>
 <div class="status-filter" *ngIf="canSeeStatus()">
   <button mat-raised-button color="primary" (click)="filterByStatus(null)">Усі</button>
   <button mat-raised-button color="primary" (click)="filterByStatus('APPROVED')">Прийняті</button>
@@ -6,6 +12,7 @@
 </div>
 
 <div class="posts-grid">
+
   <div *ngFor="let post of posts" class="post-card" [routerLink]="['/view-project', post.id]">
     <div *ngIf="canSeeStatus() && post.status" class="post-status" [ngClass]="{
       'pending': post.status === 'PENDING_APPROVAL',

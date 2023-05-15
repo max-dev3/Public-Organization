@@ -13,11 +13,14 @@
       <td>{{ user.username }}</td>
       <td>{{ user.role }}</td>
       <td>
-        <button class="action-button" (click)="changeUserRole(user.id, 'USER')">Set User</button>
-        <button class="action-button" (click)="changeUserRole(user.id, 'MODERATOR')">Set Moderator</button>
-        <button class="action-button" (click)="changeUserRole(user.id, 'ADMIN')">Set Admin</button>
+        <div class="action-buttons-container">
+          <button class="action-button" (click)="changeUserRole(user.id, 'USER')">Надати User</button>
+          <button class="action-button" (click)="changeUserRole(user.id, 'MODERATOR')">Надати Moderator</button>
+          <button class="action-button" (click)="changeUserRole(user.id, 'ADMIN')">Надати Admin</button>
+        </div>
       </td>
     </tr>
     </tbody>
+
   </table>
 </div>

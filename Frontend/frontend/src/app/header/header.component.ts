@@ -9,11 +9,13 @@ import {AuthService} from "../services/auth.service";
 export class HeaderComponent {
   menuOpen = false;
   isLoggedIn = false;
+  currentUserRole: string = this.authService.getUser()?.role;
 
   constructor(private elRef: ElementRef,private authService: AuthService) {}
   ngOnInit(): void {
     this.authService.isLoggedIn().subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
+      this.isAdmin();
     });
   }
 
@@ -27,9 +29,13 @@ export class HeaderComponent {
       this.menuOpen = false;
     }
   }
-  // navigation.component.ts
   logout(): void {
     this.authService.logout();
+  }
+
+  isAdmin(): boolean {
+    this.currentUserRole = this.authService.getUser()?.role;
+    return this.currentUserRole === 'ADMIN';
   }
 
 
