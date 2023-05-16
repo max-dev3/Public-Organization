@@ -28,6 +28,9 @@ import { ViewPostComponent } from './view-post/view-post.component';
 import { StatusTranslatePipe } from './status-translate.pipe';
 import { UserListComponent } from './user-list/user-list.component';
 import {MatTableModule} from "@angular/material/table";
+import { FaqComponent } from './faq/faq.component';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -46,23 +49,26 @@ import {MatTableModule} from "@angular/material/table";
     UkDatePipe,
     ViewPostComponent,
     StatusTranslatePipe,
-    UserListComponent
+    UserListComponent,
+    FaqComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatDialogModule,
-        MatButtonModule,
-        MatTabsModule,
-        MatIconModule,
-        MatBadgeModule,
-        BrowserAnimationsModule,
-        CKEditorModule,
-        MatTableModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatIconModule,
+    MatBadgeModule,
+    BrowserAnimationsModule,
+    CKEditorModule,
+    MatTableModule,
+    MatExpansionModule,
+    MatInputModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

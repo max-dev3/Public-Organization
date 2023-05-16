@@ -24,6 +24,19 @@ export interface Like {
   id: number;
   user: User;
 }
+export interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+  user: {
+    id: number;
+    username: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  isOpen: boolean;
+}
+
 
 @Injectable({
   providedIn: 'root'

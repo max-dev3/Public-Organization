@@ -194,6 +194,9 @@ header {
   filter: grayscale(0%);
   cursor: pointer;
 }
+.faqs{
+  margin-top: 20px;
+}
 @media (max-width: 768px) {
   .offer {
     flex-direction: column;

@@ -38,7 +38,11 @@ export class ProjectsComponent implements OnInit {
 
   toggleLike(postId: number, userId: number): void {
     this.postService.toggleLike(postId, userId).subscribe(() => {
-      this.loadPosts();
+      if (!this.isAuthorized() || this.currentUserRole === 'USER') {
+        this.loadApprovedPosts();
+      } else {
+        this.loadPosts();
+      }
     });
   }
 
@@ -48,7 +52,7 @@ export class ProjectsComponent implements OnInit {
 
   approvePost(postId: number): void {
     this.postService.approvePost(postId).subscribe(() => {
-      this.loadPosts();
+      this.filterAndSortPosts(); // <-- Додайте цей рядок
     });
   }
 
@@ -76,7 +80,6 @@ export class ProjectsComponent implements OnInit {
     this.filterPosts();
     this.sortPosts();
   }
-  // Add a method to change the current status and reload the posts
   filterByStatus(status: 'APPROVED' | 'REJECTED' | 'PENDING_APPROVAL' | null): void {
     this.currentStatus = status;
     this.loadPosts();
@@ -88,13 +91,26 @@ export class ProjectsComponent implements OnInit {
   filterPosts(): void {
     if (this.searchQuery.trim() !== '') {
       this.posts = this.posts.filter(post =>
-        post.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+        post.title.toLowerCase().includes(this.searchQuery.toLowerCase()) && post.status === 'APPROVED'
       );
     } else {
-      this.loadPosts();
+      if (!this.isAuthorized() || this.currentUserRole === 'USER') {
+        this.loadApprovedPosts();
+      } else {
+        this.loadPosts();
+      }
     }
   }
 
+  loadApprovedPosts(): void {
+    this.postService.getAllPosts().subscribe(posts => {
+      if (!this.isAuthorized() || this.currentUserRole === 'USER') {
+        this.posts = posts.filter(post => post.status === 'APPROVED');
+      } else {
+        this.posts = posts;
+      }
+    });
+  }
   sortPosts(): void {
     this.posts.sort((a, b) => {
       const valueA = a.title.toLowerCase();
